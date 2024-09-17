@@ -1,0 +1,43 @@
+<p>book-details works!</p>
+<br>
+
+<a [routerLink]="['/my-favorits']" routerLinkActive="router-link-active">Favoritos</a>
+<br>
+<a [routerLink]="['/']" routerLinkActive="router-link-active"> Home</a>
+
+
+@if (bookDetail?.volumeInfo; as data) {
+<div>
+    <h2>{{ bookDetail.volumeInfo.title }}</h2>
+    <p>{{ bookDetail.volumeInfo.description }}</p>
+    <img [src]="bookDetail.volumeInfo.imageLinks?.thumbnail" alt="{{ bookDetail.volumeInfo.title }}">
+
+    @if (bookDetail.volumeInfo.authors?.length > 0 ) {
+    <h4>autores:</h4>
+    @for(item of data.authors; track item){
+    <p> {{ item }}</p>
+    }@empty{
+    <h2>Sem Autor descrito</h2>
+    }
+    }
+
+    @if (bookDetail.volumeInfo.categories?.length > 0 ) {
+    <h4>categorias:</h4>
+    @for(item of data.categories; track item){
+    <p> {{ item }}</p>
+    }@empty{
+    <h2>Sem categorias</h2>
+    }
+    }
+
+    @if (bookDetail.favorite) {
+    <a [routerLink]="['/my-favorits']">Avaliado, ver:</a>
+    }@else {
+
+    <app-dialog-confirm (confirm)="handleConfirm($event)" />
+
+    }
+</div>
+}
+
+
