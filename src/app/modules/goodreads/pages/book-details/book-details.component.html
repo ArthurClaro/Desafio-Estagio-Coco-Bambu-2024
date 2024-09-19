@@ -1,10 +1,9 @@
 <main>
 
     @if (bookDetail?.volumeInfo; as data) {
-
     <section>
 
-        @if (bookDetail.volumeInfo.imageLinks) {
+        @if (bookDetail.volumeInfo.imageLinks ) {
         <img [src]="bookDetail.volumeInfo.imageLinks?.thumbnail" alt="{{ bookDetail.volumeInfo.title }}">
         }@else {
         <p>This book does not have a cover</p> }
@@ -24,14 +23,11 @@
         <app-dialog-confirm (confirm)="handleConfirm($event)" />
         }
 
-
         @if (bookDetail.tags?.length > 0 ) {
         <h4 class="">Your Tags: </h4>
         <h5 class="title">{{bookDetail.tags}} </h5>
         }
     </section>
-
-
 
     <article>
 
@@ -65,10 +61,6 @@
             <i class="pi pi-pen-to-square"></i>
         </a>
         }
-
     </article>
-
-
     }
-
 </main>

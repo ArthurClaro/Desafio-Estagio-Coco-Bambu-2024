@@ -38,7 +38,6 @@ main {
             color: var(--text-primary);
             padding: 11px;
             width: 100%;
-            // margin: 0 14px;
         }
 
         h4 {
@@ -47,13 +46,11 @@ main {
             border-bottom: 1px solid black;
             margin-top: 10px;
             width: 100%;
-
         }
 
         h5 {
             font-weight: 500;
             width: 100%;
-
         }
 
         p{
@@ -108,13 +105,10 @@ main {
             flex-direction: row;
             color: var(--author);
             border-bottom: 1px solid black;
-            /* margin-bottom: 10px; */
             margin-top: 7px;
             align-items: center;
             gap: 5px;
             font-size: 17px;
-
-            p {}
         }
     }
 }

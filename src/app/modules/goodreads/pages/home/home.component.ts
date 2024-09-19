@@ -1,117 +1,90 @@
-import { Component, ElementRef, EventEmitter, inject, Output, ViewChild } from '@angular/core';
+import { Component, ElementRef, inject, ViewChild } from '@angular/core';
 import { Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiService } from '../../../../services/api.service';
-import { CommonModule } from '@angular/common';
-
-// PrimeNg
-import { SkeletonModule } from 'primeng/skeleton';
-import { FormsModule } from '@angular/forms';
+import { ApiResponse, BookDetail, BookItem } from '../../interface/IBooksItems.interface';
 import { RatingModule } from 'primeng/rating';
-
+import { FormsModule } from '@angular/forms';
+import { SkeletonModule } from 'primeng/skeleton';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule,
-    RouterLink,
-    RouterLinkActive,SkeletonModule,FormsModule, RatingModule
-    ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  styleUrls: ['./home.component.scss'],
+  imports: [
+    CommonModule,
+    RouterLink,
+    RouterLinkActive,
+    SkeletonModule,
+    FormsModule,
+    RatingModule
+  ]
 })
 export default class HomeComponent {
-  #apiService = inject(ApiService)
+  #apiService = inject(ApiService);
+  #router = inject(Router);
 
-  public books: any[] = []; // Para armazenar os livros
-  public searchValue = 'Maquiavel'; // Para mostrar enquanto carrega
-  public bookDetail: any = {}; // Para armazenar os livros
+  @ViewChild('search') public search!: ElementRef;
+  @ViewChild('booksSection') public booksSection!: ElementRef;
 
-  public getBooks = this.#apiService.getAllBooks
-  public getBooksId = this.#apiService.getBookId
-
+  public books: BookItem[] = [];
+  public nameSearch: string = '';
+  public bookDetail: BookDetail | null = null;
+  public searchValue = 'Maquiavel';
+  
   ngOnInit(): void {
-    this.searchBooks(this.searchValue); // Realiza uma busca inicial
+    this.searchBooks(this.searchValue);
   }
 
-
-  public searchBooks(value: string) {
+  public searchBooks(value: string): void {
     this.#apiService.httpAllBooks$(value).subscribe({
-      next: (response) => {
-        console.log(response); // Exibe no console os itens recebidos
-        // Para cada item da resposta, adiciona um valor aleatório de rating
-        this.books = (response.items || []).map((item: any) => {
-          return {
-            ...item,
-            randomRating: this.getRandomValue(0, 5) // Gera um valor aleatório entre 0 e 5
-          };
-        });
-        console.log(this.books)
-
+      next: (response: ApiResponse) => {
+        this.books = (response.items || []).map(item => ({
+          ...item,
+          randomRating: this.getRandomValue(0, 5)
+        }));
       },
-      error: (error) => {
-        console.log(error);
-        this.books = []; // Reseta a lista de livros em caso de erro
+      error: () => {
+        this.books = [];
       }
     });
   }
 
-  // Função para gerar valor aleatório
-  getRandomValue(min: number, max: number): number {
+  public searchBookOrAuthor(value: string): void {
+    if (value) {
+      this.nameSearch = value;
+      this.searchBooks(value);
+      this.scrollToBooks();
+      this.search.nativeElement.value = '';
+    }
+  }
+
+  private scrollToBooks(): void {
+    this.booksSection.nativeElement.scrollIntoView({ behavior: 'smooth' });
+  }
+
+  public clickBookDetails(id: string): void {
+    if (id) {
+      this.bookDetails(id);
+    }
+  }
+
+  private bookDetails(id: string): void {
+    this.#apiService.httpBookId$(id).subscribe({
+      next: (response: BookDetail) => {
+        this.bookDetail = response;
+        this.#router.navigate([`/book-details/${response.id}`], {
+          state: { bookDetail: response }
+        });
+      },
+      error: () => {
+        this.bookDetail = null;
+      }
+    });
+  }
+
+  private getRandomValue(min: number, max: number): number {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   }
-
-  // #cdr = inject(ChangeDetectorRef)
-  @ViewChild('search') public search!: ElementRef
-  @ViewChild('booksSection') public booksSection!: ElementRef; // Referência ao article
-
-public nameSearch:string =''
-  public searchBookOrAuthor(value: string) {
-    if (value) {
-      console.log(value); // Para verificar a entrada
-      this.nameSearch= value
-      this.searchBooks(value); // Faz a pesquisa com o valor inserido
-      // this.#cdr.detectChanges();
-      this.scrollToBooks(); // Rolando para a seção de livros após a busca
-      this.search.nativeElement.value = ''
-    }
-  }
-  // Método para rolar até a seção de livros
-  private scrollToBooks(): void {
-    this.booksSection.nativeElement.scrollIntoView({ behavior: 'smooth' }); // Rolagem suave até a seção de livros
-  }
-
-  // ////////////////////////////////////////////
-  @Output() public outputBookDetails = new EventEmitter()
-  #router = inject(Router)
-  // this.#router.navigate(['/'])
-
-  public bookDetails(value: string) {
-    this.#apiService.httpBookId$(value).subscribe({
-      next: (response) => {
-        console.log(response); // Exibe no console os itens recebidos
-        this.bookDetail = response || []; // Atualiza a lista de livros
-
-
-        this.#router.navigate([`/book-details/${response.id}`], {
-          state: { bookDetail: response || [] }
-        });
-
-      },
-      error: (error) => {
-        console.log(error);
-        this.bookDetail = []; // Reseta a lista de livros em caso de erro
-      }
-    });
-  }
-
-  public clickBookDetails(value: string) {
-    if (value) {
-      // console.log(value);
-      this.bookDetails(value);
-    }
-  }
-
-
-
-
 }

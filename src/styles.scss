@@ -1,3 +1,5 @@
+/* Outras regras de estilo aqui */
+
 @import "primeng/resources/themes/lara-light-blue/theme.css";
 @import "primeng/resources/primeng.css";
 @import 'primeicons/primeicons.css';
@@ -9,8 +11,5 @@
 
 /* Reset CSS */
 @layer reset {
-    button,
-    input {
-        /* CSS to Reset */
-    }
+
 }

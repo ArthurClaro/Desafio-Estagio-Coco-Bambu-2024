@@ -4,12 +4,10 @@
         <label for="filterTag">Filter by tag:</label>
         <input type="text" id="filterTag" [(ngModel)]="filterTag" (input)="filterByTag()"
             placeholder="Enter a tag to filter" />
-        <!-- Botão "Clean" aparece somente se o campo filterTag não estiver vazio -->
         <button *ngIf="filterTag" (click)="clearFilter()">
             <i class="pi pi-replay"></i>
         </button>
     </nav>
-
 
     <div class="gap" *ngIf="filteredBooks.length > 0; else noBooks">
         <div class="right" *ngFor="let item of filteredBooks; trackBy: trackById">
@@ -28,18 +26,15 @@
             <article>
 
                 <div class="column">
-                    <!-- Input para o campo 'range' -->
                     <label for="range-{{item.id}}">Range ( <span>{{item.range}}</span> )</label>
                     <p-rating [(ngModel)]="item.range" [readonly]="false" [cancel]="false" (onRate)="updateBook(item)">
                     </p-rating>
 
                 </div>
 
-                <!-- Gerenciamento das tags -->
                 <div>
                     <label for="tags-{{item.id}}">Tags:</label>
 
-                    <!-- Lista as tags já existentes -->
                     <ul>
                         <li *ngFor="let tag of item.tags; let i = index">
                             {{ tag }}
@@ -48,7 +43,6 @@
                         </li>
                     </ul>
 
-                    <!-- Campo para adicionar nova tag -->
                     <div class="row">
                         <input type="text" [(ngModel)]="newTag[item.id]" placeholder="New tag... máx ( 3 )" />
                         <button (click)="addTag(item)">Add Tag
@@ -58,13 +52,11 @@
                 </div>
 
                 <div class="column">
-                    <!-- Input para o campo 'notes' -->
                     <label for="notes-{{item.id}}">Notes</label>
                     <textarea id="notes-{{item.id}}" [(ngModel)]="item.notes" (input)="updateBook(item)" rows="4"
                         cols="50"></textarea>
                 </div>
 
-                <!-- Input para o campo 'favorite' -->
                 <div >
                     <label for="favorite-{{item.id}}">Remove ➔</label>
                     <input class="remove" type="checkbox" id="favorite-{{item.id}}" [(ngModel)]="item.favorite"
@@ -80,6 +72,4 @@
     <ng-template #noBooks>
         <h3>No books found, filter another tag</h3>
     </ng-template>
-
-
 </main>

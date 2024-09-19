@@ -2,37 +2,30 @@
     <section>
         <div>
             <h4 class="title">Welcome to</h4>
-            <img src='assets/images/goodreads.svg' alt="Goodreads logo">
+            <img src="assets/images/goodreads.svg" alt="Goodreads logo" />
         </div>
 
         <label>
-            <input type="text" (keyup.enter)="searchBookOrAuthor(search.value)"
-                placeholder="Search book, name, author, ......" #search>
+            <input type="text" placeholder="Search book, name, author, ......" #search
+                (keyup.enter)="searchBookOrAuthor(search.value)" />
             <button (click)="searchBookOrAuthor(search.value)">
-                <img src='assets/icons/search-input.svg' alt="Goodreads logo">
+                <img src="assets/icons/search-input.svg" alt="Search icon" />
             </button>
         </label>
 
-        <p>Meet your favorite book, find you reading community, and manage you reading life.</p>
+        <p>Meet your favorite book, find your reading community, and manage your reading life.</p>
     </section>
 
-
     <article #booksSection>
-
-        @if (!nameSearch) {
-        <h3 class="title">Trending this week</h3>
-        }@else {
-        <h3 class="title">Your Search: {{nameSearch}}</h3>
-        }
+        <h3 class="title">{{ nameSearch ? 'Your Search: ' + nameSearch : 'Trending this week' }}</h3>
 
         @if (books; as data) {
         <ul>
             @for(item of data; track item){
-
             <li>
-                @if (item.volumeInfo.imageLinks) {
-                <img [src]="item.volumeInfo.imageLinks?.thumbnail" alt="{{ item.volumeInfo.title }}">
-                }@else {
+                @if (item.volumeInfo.imageLinks && item.volumeInfo.imageLinks.thumbnail) {
+                <img [src]="item.volumeInfo.imageLinks.thumbnail" alt="{{ item.volumeInfo.title }}">
+                } @else {
                 <p-skeleton width="10rem" height="4rem" />
                 }
 
@@ -44,11 +37,11 @@
                 <p>Sem Autor</p>
                 }
 
-                <p-rating [ngModel]="item.randomRating" [readonly]="true" [cancel]="false"> </p-rating>
+                <p-rating [ngModel]="item.randomRating" [readonly]="true" [cancel]="false"></p-rating>
 
                 <button (click)="clickBookDetails(item.id)">
                     <h6>Read more</h6>
-                     <i class="pi pi-window-maximize"></i>
+                    <i class="pi pi-window-maximize"></i>
                 </button>
             </li>
 
@@ -57,9 +50,7 @@
             }
         </ul>
         }@else {
-        <li>erro de conexaõa</li>
+        <li>Loss of connection</li>
         }
-
     </article>
-
 </main>

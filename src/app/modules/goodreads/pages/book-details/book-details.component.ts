@@ -6,86 +6,72 @@ import { RatingModule } from 'primeng/rating';
 import { FormsModule } from '@angular/forms';
 import { DatePipe, ViewportScroller } from '@angular/common';
 import { ChipsModule } from 'primeng/chips';
-
+import { ELocalStorage } from '../../enum/ELocalStorage';
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [RouterLink,ChipsModule, RouterLinkActive, DialogConfirmComponent,SkeletonModule,RatingModule,FormsModule,DatePipe],
+  imports: [RouterLink, ChipsModule, RouterLinkActive, DialogConfirmComponent, SkeletonModule, RatingModule, FormsModule, DatePipe],
   templateUrl: './book-details.component.html',
-  styleUrl: './book-details.component.scss'
+  styleUrls: ['./book-details.component.scss']
 })
 export default class BookDetailsComponent implements OnInit {
   @ViewChild(DialogConfirmComponent) dialogConfirm!: DialogConfirmComponent;
-  // Função para abrir o diálogo usando o ViewChild
-
-  openDialog() {
-    this.dialogConfirm.showDialog(); // Abre o modal
-  }
-
-  handleConfirm(data: any) {
-    // console.log('Dados do formulário recebidos:', data);
-      const combinedData = {
-      ...this.bookDetail, 
-      ...data, 
-    };
-      this.addBookLocalStorage(combinedData);
-  }
-
-  #route = inject(ActivatedRoute)
-  #router = inject(Router)
-
-
+  
   public bookDetail: any;
+
+  #route = inject(ActivatedRoute);
+  #router = inject(Router);
+  #viewportScroller = inject(ViewportScroller);
+
   constructor(private router: Router) {
-    // Pegando o estado (bookDetail) passado pela navegação
     const navigation = this.router.getCurrentNavigation();
     this.bookDetail = navigation?.extras.state?.['bookDetail'];
   }
 
-  #viewportScroller = inject(ViewportScroller);
-
   ngOnInit(): void {
     this.#viewportScroller.scrollToPosition([0, 0]);
-
-    const bookId = this.#route.snapshot.params['id']; // Obtém o ID da rota
+    const bookId = this.#route.snapshot.params['id'];
     const existingBook = this.findBookInLocalStorage(bookId);
-
     if (existingBook) {
-      // Se o livro já existir no localStorage, use o objeto encontrado
       this.bookDetail = existingBook;
-      console.log('Livro encontrado no localStorage:', existingBook);
     } else {
-      console.log('livro não encontrado na localStorage', this.bookDetail)
       if (!this.bookDetail || !this.bookDetail.volumeInfo) {
         this.router.navigate(['/']);
       }
     }
   }
 
-  #setBooks = signal(this.#parseBooks())
+  openDialog(): void {
+    this.dialogConfirm.showDialog();
+  }
+
+  handleConfirm(data: any): void {
+    const combinedData = {
+      ...this.bookDetail,
+      ...data
+    };
+    this.addBookLocalStorage(combinedData);
+  }
+
+  #setBooks = signal(this.#parseBooks());
 
   #parseBooks() {
-    return JSON.parse(localStorage.getItem('@book-detail-list') || '[]')
+    const parsedBooks = JSON.parse(localStorage.getItem(ELocalStorage.BOOK_LIST) || '[]');
+    return parsedBooks;
   }
 
   findBookInLocalStorage(bookId: string) {
-    const books = this.#parseBooks(); // Busca todos os livros no localStorage
-    return books.find((book: any) => book.id === bookId); // Verifica se o livro com o id já existe
+    const books = this.#parseBooks();
+    const foundBook = books.find((book: any) => book.id === bookId);
+    return foundBook;
   }
 
-  public addBookLocalStorage(book: any) {
-    const books = this.#parseBooks(); // Obtém os livros existentes
-    localStorage.setItem('@book-detail-list', JSON.stringify([...books, book])); // Adiciona o novo livro
-    console.log('Livro adicionado ao localStorage:', book);
-
-    // Atualiza o estado local do componente para refletir a mudança
+  addBookLocalStorage(book: any): void {
+    const books = this.#parseBooks();
+    const updatedBooks = [...books, book];
+    localStorage.setItem(ELocalStorage.BOOK_LIST, JSON.stringify(updatedBooks));
     this.bookDetail = book;
-
-    // Também atualiza o sinal (ou estado de gerenciamento) que contém os livros
     this.#setBooks.set(this.#parseBooks());
   }
-
-
-
 }
