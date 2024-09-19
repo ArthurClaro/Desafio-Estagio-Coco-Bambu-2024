@@ -1,43 +1,74 @@
-<p>book-details works!</p>
-<br>
+<main>
 
-<a [routerLink]="['/my-favorits']" routerLinkActive="router-link-active">Favoritos</a>
-<br>
-<a [routerLink]="['/']" routerLinkActive="router-link-active"> Home</a>
+    @if (bookDetail?.volumeInfo; as data) {
+
+    <section>
+
+        @if (bookDetail.volumeInfo.imageLinks) {
+        <img [src]="bookDetail.volumeInfo.imageLinks?.thumbnail" alt="{{ bookDetail.volumeInfo.title }}">
+        }@else {
+        <p>This book does not have a cover</p> }
+        <h2 class="title">{{ bookDetail.volumeInfo.title }}</h2>
+
+        <p-rating [ngModel]="bookDetail.range" [readonly]="true" [cancel]="false"> </p-rating>
+        @if (!bookDetail.range) {
+        <p class="btn-destaq">No reviews</p>
+        }
+
+        @if (bookDetail.favorite) {
+        <a class="btn-destaq" [routerLink]="['/my-favorits']">
+            <p>Favorited</p>
+            <i class="pi pi-window-maximize"></i>
+        </a>
+        }@else {
+        <app-dialog-confirm (confirm)="handleConfirm($event)" />
+        }
 
 
-@if (bookDetail?.volumeInfo; as data) {
-<div>
-    <h2>{{ bookDetail.volumeInfo.title }}</h2>
-    <p>{{ bookDetail.volumeInfo.description }}</p>
-    <img [src]="bookDetail.volumeInfo.imageLinks?.thumbnail" alt="{{ bookDetail.volumeInfo.title }}">
+        @if (bookDetail.tags?.length > 0 ) {
+        <h4 class="">Your Tags: </h4>
+        <h5 class="title">{{bookDetail.tags}} </h5>
+        }
+    </section>
 
-    @if (bookDetail.volumeInfo.authors?.length > 0 ) {
-    <h4>autores:</h4>
-    @for(item of data.authors; track item){
-    <p> {{ item }}</p>
-    }@empty{
-    <h2>Sem Autor descrito</h2>
+
+
+    <article>
+
+        @if (bookDetail.volumeInfo.authors?.length > 0 ) {
+        <p class="btn-destaq">Authors: </p>
+        @for(item of data.authors; track item){
+        <h4 class=""> {{ item }}</h4>
+        }@empty{
+        <h4>No Author Described</h4>
+        }
+        }
+
+        @if (bookDetail.volumeInfo.categories?.length > 0 ) {
+        <p class="btn-destaq">Categories: </p>
+        @for(item of data.categories; track item){
+        <h4> {{ item }}</h4>
+        }@empty{
+        <h4>No Categories</h4>
+        }
+        }
+
+        <h4 class="btn-destaq date">Date: {{ bookDetail.volumeInfo.publishedDate | date: 'MMMM d, y' }}</h4>
+
+        <h5>{{ bookDetail.volumeInfo.description }}</h5>
+
+        @if (bookDetail.notes?.length > 0 ) {
+        <h6 class="btn-destaq">Your Notes: </h6>
+        <textarea disabled style="resize: none;">{{bookDetail.notes}}</textarea>
+        <a class="btn-destaq" [routerLink]="['/my-favorits']">
+            <p>Edited</p>
+            <i class="pi pi-pen-to-square"></i>
+        </a>
+        }
+
+    </article>
+
+
     }
-    }
 
-    @if (bookDetail.volumeInfo.categories?.length > 0 ) {
-    <h4>categorias:</h4>
-    @for(item of data.categories; track item){
-    <p> {{ item }}</p>
-    }@empty{
-    <h2>Sem categorias</h2>
-    }
-    }
-
-    @if (bookDetail.favorite) {
-    <a [routerLink]="['/my-favorits']">Avaliado, ver:</a>
-    }@else {
-
-    <app-dialog-confirm (confirm)="handleConfirm($event)" />
-
-    }
-</div>
-}
-
-
+</main>

@@ -1,0 +1,54 @@
+
+footer {
+    background-color: var(--footer);
+    color: var(--background--primary);
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 60px 130px;
+    align-items: flex-end;
+    margin-top: 25px;
+
+    section {
+        display: flex;
+        flex-direction: row;
+        gap: 108px;
+
+        div {
+            display: flex;
+            gap: 37px;
+            flex-direction: column;
+
+            h5 {
+                text-transform: uppercase;
+                font-size: 16px;
+                letter-spacing: 2px;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 21px;
+
+                li {
+                    p {
+                        font-size: 15px;
+                    }
+
+                    i {
+                        font-size: 29px;
+                    }
+                }
+            }
+
+            .row {
+                display: flex;
+                flex-direction: row;
+            }
+        }
+    }
+
+    aside {
+        p {}
+    }
+}

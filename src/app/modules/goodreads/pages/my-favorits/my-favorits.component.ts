@@ -1,13 +1,14 @@
-import { NgFor, NgIf } from '@angular/common';
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-// import logo from '../../../../../assets/images/goodreads.svg'
+import { SkeletonModule } from 'primeng/skeleton';
+import { RatingModule } from 'primeng/rating';
 
 @Component({
   selector: 'app-my-favorits',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, NgFor, NgIf, FormsModule],
+  imports: [RouterLink, RouterLinkActive, NgFor, NgIf, FormsModule,SkeletonModule,DatePipe,RatingModule],
   templateUrl: './my-favorits.component.html',
   styleUrl: './my-favorits.component.scss'
 })

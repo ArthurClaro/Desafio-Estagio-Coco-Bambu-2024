@@ -3,6 +3,9 @@ body {
     font-family: "Roboto", sans-serif;
     font-weight: 400;
     font-style: normal;
+    background-color: var(--background--primary);
+    color: var(--text-primary);
+
 }
 
 .title {
@@ -16,7 +19,7 @@ body {
 .btn-destaq {
     // botões e destaques
     font-family: "Poppins", sans-serif;
-    font-weight: 500;
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -26,6 +29,7 @@ body {
     --author: #FFCC33;
     --btn-icons: #B3935C;
     --footer: #5A4634;
+    --contents:#f5f5dc;
 }
 
 // Cor de fundo: Um bege claro (#F9F6EE)
@@ -46,6 +50,325 @@ body {
 }
 
 img {
-    max-height: 200px;
     max-width: 100vw;
 }
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    // font: inherit;
+    vertical-align: baseline;
+    box-sizing: border-box;
+}
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    // line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input {
+    box-sizing: border-box;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--color-black);
+    -webkit-box-shadow: 0px 0px 0px 1000px var(--color-grey) inset;
+}
+
+// /////////// PRIME-NG MAIN HOME
+.p-element.ng-untouched.ng-pristine.ng-valid {
+    text-align: center;
+}
+
+.p-rating .p-rating-item.p-rating-item-active .p-rating-icon {
+    color: var(--author);
+}
+
+.p-skeleton.p-component {
+    height: 241px !important;
+    width: 100% !important;
+}
+
+// /////////// PRIME-NG MAIN DIALOG
+// // modal button
+.p-ripple.p-element.p-button.p-component {
+    padding: 10px 40px;
+    flex-direction: row-reverse;
+    gap: 10px;
+    font-family: "Poppins", sans-serif;
+    color: var(--text-primary);
+    background-color: var(--author);
+    border: none;
+}
+
+// modal aberto
+
+.p-dialog	{
+        width: 55vw;
+        height: auto;
+        z-index: 1102;
+        // 
+}
+.p-dialog-header{
+    padding: 17px;
+    background-color: var(--btn-icons) !important;
+    h5{
+        display: flex;
+        gap: 13px;
+        align-items: center;
+        color: var(--author);
+        
+    }
+    button{
+        min-width: 0px !important;
+        border-radius: 19px;
+        width: auto;
+        padding: 9px !important;
+        color:  var(--btn-icons) !important;;
+    }
+}
+
+.p-dialog-content	{
+    padding: 17px;
+    background-color: var(--contents);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    div{
+        display: flex;
+        flex-direction: column;
+        gap: 7px;
+        .p-rating{
+            display: flex;
+            flex-direction: row;
+        }
+        label{
+            // font-style: italic;
+            color: var(--btn-icons);
+            margin-top: 7px;
+        }
+        textarea{
+            resize: none;
+            border: none;
+            border-radius: 10px;
+            height: 123px;
+            padding: 10px;
+            font-size: 15px;
+        }
+        
+    }
+    .row{
+        display: flex;
+        flex-direction: row;
+        gap: 16px;
+        height: 34px;
+    }
+    textarea:focus{
+        border: none;
+        outline: none;
+    }
+
+    button{
+        border: none;
+        background-color: var(--btn-icons);
+        color: var(--author);
+        font-size: 21px;
+        padding: 9px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        justify-content: center;
+        gap: 13px;
+        cursor: pointer;
+    }
+}
+// /  estrela checkbox
+/* Substitui o ícone quando o checkbox está marcado */
+.p-checkbox-box.p-highlight .p-checkbox-icon {
+    background-image: url('../assets/icons/favorite-modal.svg'); /* Ícone para o estado marcado */
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 1em;
+    height: 1em;
+    display: block;
+    padding: 13px;
+}
+
+.p-checkbox .p-checkbox-box .p-checkbox-icon{
+    color: transparent !important;
+    border: none !important ;
+
+}
+.p-checkbox .p-checkbox-box.p-highlight{
+    background-color: transparent;
+    border: none !important ;
+
+}
+.p-checkbox-box{
+    border: 1px solid black ;
+}
+
+// input das Tags
+.p-chips-token	{
+    padding-left: 13px;
+    padding: 6px;
+}
+.p-inputtext.p-chips-multiple-container{
+    padding-left: 13px;
+
+}
+.p-chips-input-token{
+    /* background-color: blue; */
+    height: 45px;
+    padding-left: 13px;
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+// toast
+
+.p-toast-message	{
+    padding: 15px;
+}
+
+// //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// .p-rating	{
+//     margin-top: 10px;
+// }
+
+
+
+
+
+
+
+
+
+

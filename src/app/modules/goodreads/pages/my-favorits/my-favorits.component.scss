@@ -1,0 +1,168 @@
+main {
+    background-color: var(--contents);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+
+    nav {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        padding: 10px 40px;
+        justify-content: center;
+        margin-top: 18px;
+        font-size: 17px;
+        label {}
+
+        input {
+            border: none;
+            border-bottom: 1px solid black;
+            background: none;
+            height: 25px;
+            font-size: 15px;
+            letter-spacing: 0.5px;
+        }
+
+        button {
+            border: none;
+            background: var(--author);
+            border-radius: 15px;
+            cursor: pointer;
+        }
+    }
+
+    .gap {
+        display: flex;
+        flex-direction: column;
+        gap: 37px;
+
+        .right {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+            padding: 10px 40px;
+            justify-content: space-around;
+            border-bottom: 15px solid var(--background--primary);
+
+            section {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                /* gap: 3px; */
+                justify-content: center;
+
+                img {
+                    box-shadow: 14px 11px 8px 0px rgba(0, 0, 0, 0.35);
+                    height: 259px;
+                    width: 205px;
+                }
+
+                h2 {
+                    font-weight: 500;
+                    font-size: 17px;
+                    margin-top: 12px;
+                }
+
+                h4 {
+                    font-style: italic;
+                    color: var(--author);
+                }
+            }
+
+            article {
+                display: flex;
+                flex-direction: column;
+                gap: 20px;
+                align-items: flex-start;
+
+                .column {
+                    display: flex;
+                    flex-direction: column;
+                }
+
+                div {
+
+                    label {
+                        font-style: italic;
+                        color: var(--author);
+                        margin-bottom: 10px;
+
+                        span {
+                            color: black;
+                        }
+                    }
+
+                    .row {
+                        display: flex;
+                        flex-direction: row;
+                        gap: 10px;
+
+                        input {
+                            border: none;
+                            border-bottom: 1px solid black;
+                            background: none;
+                            height: 25px;
+                            font-size: 15px;
+                            letter-spacing: 0.5px;
+                        }
+                    }
+
+                    button {
+                        cursor: pointer;
+                        display: flex;
+                        flex-direction: row;
+                        justify-content: center;
+                        align-items: center;
+                        border: none;
+                        background: var(--author);
+                        font-size: 15px;
+                        gap: 8px;
+                        border-radius: 10px;
+                    }
+
+                    textarea {
+                        resize: none;
+                        height: 80px;
+                        padding: 10px;
+                        border: none;
+                        border-radius: 13px;
+                    }
+
+                    textarea:focus {
+                        border: none;
+                        outline: none;
+                    }
+
+                    ul {
+                        display: flex;
+                        flex-direction: column;
+                        /* gap: 4px; */
+                        margin-bottom: 6px;
+
+                        li {
+                            display: flex;
+                            gap: 9px;
+                            flex-direction: row;
+                            align-items: center;
+
+                            button {
+                                background-color: transparent;
+                            }
+                        }
+                    }
+                    .remove{
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+    h3{
+        width: 100vw;
+        display: flex;
+        height: 158.2px;
+        /* padding: 69px; */
+        align-items: center;
+        justify-content: center;
+    }
+}

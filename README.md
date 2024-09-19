@@ -2,6 +2,7 @@
 <!-- npm install -g @angular/cli -->
 <!-- ng --help -->
 <!-- ng g --help -->
+<!-- ng new NameProject -->
 <!-- ng s  === rodar (DENTRO DA APLICAÇÃO) -->
 <!-- ng build pra depois subir aplicação-->
 <!-- ng g c components/home-components === gerar components-->
@@ -36,7 +37,7 @@ usar inject(novo) / 1 aula de Service
 
 <!-- DARIA pra fazer CanDeactivate nos Proteção de Rotas -->
 
-
+<!-- SSR SSRG -->
 
 
 # Goodreads

@@ -1,59 +1,85 @@
-<p class="btn-destaq">Meus Favoritos</p>
+<main>
+
+    <nav>
+        <label for="filterTag">Filter by tag:</label>
+        <input type="text" id="filterTag" [(ngModel)]="filterTag" (input)="filterByTag()"
+            placeholder="Enter a tag to filter" />
+        <!-- Botão "Clean" aparece somente se o campo filterTag não estiver vazio -->
+        <button *ngIf="filterTag" (click)="clearFilter()">
+            <i class="pi pi-replay"></i>
+        </button>
+    </nav>
 
 
-<a [routerLink]="['/']" routerLinkActive="router-link-active"> Home</a>
-<br>
-<a [routerLink]="['/book-details', '2']" routerLinkActive="router-link-active"> Detalhes</a>
+    <div class="gap" *ngIf="filteredBooks.length > 0; else noBooks">
+        <div class="right" *ngFor="let item of filteredBooks; trackBy: trackById">
 
-<!-- Campo para filtrar por tags -->
-<div>
-    <label for="filterTag">Filtrar por tag:</label>
-    <input type="text" id="filterTag" [(ngModel)]="filterTag" (input)="filterByTag()" placeholder="Digite uma tag para filtrar" />
-</div>
+            <section>
+                @if (item.volumeInfo.imageLinks) {
+                <img [src]="item.volumeInfo.imageLinks?.thumbnail" alt="{{ item.volumeInfo.title }}">
+                }@else {
+                <h6>This book does not have a cover</h6>
+                }
+                <h2 class="title">{{ item.volumeInfo.title }}</h2>
 
-<img src='assets/images/goodreads.svg' alt="Goodreads logo">
+                <h4 class="btn-destaq date">Date: {{ item.volumeInfo.publishedDate | date: 'MMMM d, y' }}</h4>
+            </section>
 
-<!-- Botão "Clean" aparece somente se o campo filterTag não estiver vazio -->
-<button *ngIf="filterTag" (click)="clearFilter()">Limpar</button>
+            <article>
 
-<div *ngIf="filteredBooks.length > 0; else noBooks">
-    <div *ngFor="let item of filteredBooks; trackBy: trackById">
-        <img [src]="item.volumeInfo.imageLinks?.thumbnail" alt="{{ item.volumeInfo.title }}">
-        <p>{{ item.volumeInfo.title }}</p>
+                <div class="column">
+                    <!-- Input para o campo 'range' -->
+                    <label for="range-{{item.id}}">Range ( <span>{{item.range}}</span> )</label>
+                    <p-rating [(ngModel)]="item.range" [readonly]="false" [cancel]="false" (onRate)="updateBook(item)">
+                    </p-rating>
 
-        <!-- Input para o campo 'favorite' -->
-        <label for="favorite-{{item.id}}">Favorito:</label>
-        <input type="checkbox" id="favorite-{{item.id}}" [(ngModel)]="item.favorite" (ngModelChange)="toggleFavorite(item)" />
+                </div>
 
-        <!-- Input para o campo 'notes' -->
-        <label for="notes-{{item.id}}">Anotações:</label>
-        <textarea id="notes-{{item.id}}" [(ngModel)]="item.notes" (input)="updateBook(item)" rows="4" cols="50"></textarea>
+                <!-- Gerenciamento das tags -->
+                <div>
+                    <label for="tags-{{item.id}}">Tags:</label>
 
-        <!-- Input para o campo 'range' -->
-        <label for="range-{{item.id}}">Faixa:</label>
-        <input type="number" id="range-{{item.id}}" max="5" min="0" [(ngModel)]="item.range" (input)="updateBook(item)" />
+                    <!-- Lista as tags já existentes -->
+                    <ul>
+                        <li *ngFor="let tag of item.tags; let i = index">
+                            {{ tag }}
+                            <button class="red" (click)="removeTag(item, i)"> <i class="pi pi-sort-down-fill "></i>
+                            </button>
+                        </li>
+                    </ul>
 
-        <!-- Gerenciamento das tags -->
-        <div>
-            <label for="tags-{{item.id}}">Tags:</label>
+                    <!-- Campo para adicionar nova tag -->
+                    <div class="row">
+                        <input type="text" [(ngModel)]="newTag[item.id]" placeholder="New tag... máx ( 3 )" />
+                        <button (click)="addTag(item)">Add Tag
+                            <i class="pi pi-sort-up-fill"></i>
+                        </button>
+                    </div>
+                </div>
 
-            <!-- Lista as tags já existentes -->
-            <ul>
-                <li *ngFor="let tag of item.tags; let i = index">
-                    {{ tag }}
-                    <button (click)="removeTag(item, i)">Remover</button>
-                </li>
-            </ul>
+                <div class="column">
+                    <!-- Input para o campo 'notes' -->
+                    <label for="notes-{{item.id}}">Notes</label>
+                    <textarea id="notes-{{item.id}}" [(ngModel)]="item.notes" (input)="updateBook(item)" rows="4"
+                        cols="50"></textarea>
+                </div>
 
-            <!-- Campo para adicionar nova tag -->
-            <input type="text" [(ngModel)]="newTag[item.id]" placeholder="Nova tag" />
-            <button (click)="addTag(item)">Adicionar Tag</button>
+                <!-- Input para o campo 'favorite' -->
+                <div >
+                    <label for="favorite-{{item.id}}">Remove ➔</label>
+                    <input class="remove" type="checkbox" id="favorite-{{item.id}}" [(ngModel)]="item.favorite"
+                        (ngModelChange)="toggleFavorite(item)" />
+                </div>
+
+
+            </article>
+
         </div>
-
-        <hr />
     </div>
-</div>
 
-<ng-template #noBooks>
-    <p>Sem livros encontrados</p>
-</ng-template>
+    <ng-template #noBooks>
+        <h3>No books found, filter another tag</h3>
+    </ng-template>
+
+
+</main>

@@ -4,7 +4,9 @@ import { ApiService } from '../../../../services/api.service';
 import { CommonModule } from '@angular/common';
 
 // PrimeNg
-
+import { SkeletonModule } from 'primeng/skeleton';
+import { FormsModule } from '@angular/forms';
+import { RatingModule } from 'primeng/rating';
 
 
 @Component({
@@ -12,7 +14,7 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule,
     RouterLink,
-    RouterLinkActive
+    RouterLinkActive,SkeletonModule,FormsModule, RatingModule
     ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
@@ -31,12 +33,20 @@ export default class HomeComponent {
     this.searchBooks(this.searchValue); // Realiza uma busca inicial
   }
 
+
   public searchBooks(value: string) {
     this.#apiService.httpAllBooks$(value).subscribe({
       next: (response) => {
-        // console.log(response); // Exibe no console os itens recebidos
-        // console.log(response.items); // Exibe no console os itens recebidos
-        this.books = response.items || []; // Atualiza a lista de livros
+        console.log(response); // Exibe no console os itens recebidos
+        // Para cada item da resposta, adiciona um valor aleatório de rating
+        this.books = (response.items || []).map((item: any) => {
+          return {
+            ...item,
+            randomRating: this.getRandomValue(0, 5) // Gera um valor aleatório entre 0 e 5
+          };
+        });
+        console.log(this.books)
+
       },
       error: (error) => {
         console.log(error);
@@ -45,20 +55,30 @@ export default class HomeComponent {
     });
   }
 
+  // Função para gerar valor aleatório
+  getRandomValue(min: number, max: number): number {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
 
   // #cdr = inject(ChangeDetectorRef)
   @ViewChild('search') public search!: ElementRef
+  @ViewChild('booksSection') public booksSection!: ElementRef; // Referência ao article
 
-
+public nameSearch:string =''
   public searchBookOrAuthor(value: string) {
     if (value) {
       console.log(value); // Para verificar a entrada
+      this.nameSearch= value
       this.searchBooks(value); // Faz a pesquisa com o valor inserido
       // this.#cdr.detectChanges();
+      this.scrollToBooks(); // Rolando para a seção de livros após a busca
       this.search.nativeElement.value = ''
     }
   }
-
+  // Método para rolar até a seção de livros
+  private scrollToBooks(): void {
+    this.booksSection.nativeElement.scrollIntoView({ behavior: 'smooth' }); // Rolagem suave até a seção de livros
+  }
 
   // ////////////////////////////////////////////
   @Output() public outputBookDetails = new EventEmitter()
@@ -70,19 +90,7 @@ export default class HomeComponent {
       next: (response) => {
         console.log(response); // Exibe no console os itens recebidos
         this.bookDetail = response || []; // Atualiza a lista de livros
-        // console.log(this.bookDetail.volumeInfo.title)
 
-        // const tags: any = []
-        // const favorite: any = false
-        // const newArray = {
-        //   ...this.bookDetail,
-        //   tags,
-        //   favorite,
-        // }
-        // console.log(newArray)
-
-        // this.#router.navigate(['/book-details/1'])
-        // this.outputBookDetails.emit(this.bookDetail)
 
         this.#router.navigate([`/book-details/${response.id}`], {
           state: { bookDetail: response || [] }
@@ -103,60 +111,6 @@ export default class HomeComponent {
     }
   }
 
-
-
-
-
-  visible: boolean = false;
-
-  showDialog() {
-    this.visible = true;
-  }
-
-  // ///////////////////////////////////////////////////////////////////////////////
-  // ///////////////////////////////////////////////////////////////////////////////
-  // ///////////////////////////////////////////////////////////////////////////////
-  // ///////////////////////////////////////////////////////////////////////////////
-
-
-  // public getListTask = this.#apiService.getListTask
-  // public getListTaskError = this.#apiService.getListTaskError
-
-  // public getTaskId = this.#apiService.getTaskId
-  // public getTaskIdError = this.#apiService.getTaskIdErro
-
-  // public getCreateError = this.#apiService.getCreateErro
-  // public getUpdateError = this.#apiService.getUpdateErro
-  // public getDeleteError = this.#apiService.getDeleteErro
-
-  // ngOnInit(): void {
-  //   this.#apiService.httpListTask$().subscribe();
-  //   this.#apiService.httpTaskId$('sjkvADM2rjKOGNMLPid0 ').subscribe();
-  // }
-
-  // public httpTaskCreate(title: string) {
-  //   return this.#apiService
-  //     .httpTaskCreate$(title)
-  //     .pipe(concatMap(() => this.#apiService.httpListTask$()))
-  //     .subscribe({
-  //       next: (next) => console.log(next),
-  //       error: (error) => console.log(error),
-  //     })
-  // }
-
-  // public httpTaskUpdate(id: string, title: string) {
-  //   return this.#apiService
-  //     .httpTaskUpdate$(id, title)
-  //     .pipe(concatMap(() => this.#apiService.httpListTask$()))
-  //     .subscribe()
-  // }
-
-  // public httpTaskDelete(id: string) {
-  //   return this.#apiService
-  //     .httpTaskDelete$(id)
-  //     .pipe(concatMap(() => this.#apiService.httpListTask$()))
-  //     .subscribe()
-  // }
 
 
 

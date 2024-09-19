@@ -1,54 +1,47 @@
-<div class="card flex justify-content-center">
-    <p-button (onClick)="showDialog()" label="Avaliar"/>
+<div class="card flex justify-content-center dialog-details">
+    <p-button (onClick)="showDialog()" label="Rate" icon="pi pi-star
+    " />
 
-    <p-dialog header="Header" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
-        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" >
-       
-        <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex
-            ea commodo
-            consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla
-            pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id
-            est laborum.
-        </p>
-        
-        <div class="card flex justify-content-center">
-            <label for="float-input">Favoritar ? </label>
+    <p-dialog header="Form" [(visible)]="visible" [modal]="true" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }"
+        [style]="{ width: '50vw' }" [draggable]="false" [resizable]="false" (onHide)="onDialogHide()">
 
-            <p-checkbox 
-                [(ngModel)]="checked" 
-                [binary]="true" 
-                inputId="binary" />
+        <ng-template pTemplate="header">
+            <h5>
+                Add a review to this book
+                <i class="pi pi-tag"></i>
+            </h5>
+        </ng-template>
+
+
+        <div class="card flex justify-content-center row">
+            <label for="float-input">● Mark to favorite: </label>
+
+            <p-checkbox [(ngModel)]="checked" [binary]="true" inputId="binary" />
+
         </div>
-        
+
         <div class="card flex justify-content-center">
+            <label for="float-input">● Insert a note</label>
+
             <p-rating [(ngModel)]="value" [cancel]="false" />
         </div>
-      
+
         <div class="card p-fluid">
-            <p-chips 
-                [formControl]="values"
-                [max]="max" 
-                placeholder="Máximo 3 tags" /> 
+            <label for="float-input">● Add a tag</label>
+            <p-chips [formControl]="values" separator=" "  [max]="max" placeholder="Máx 3 tags / Write and enter later or backspace" />
         </div>
 
 
         <div class="card flex justify-content-center">
-            <p-floatLabel>
-                <textarea 
-                    id="float-input" 
-                    rows="5"
-                    cols="30" 
-                    pInputTextarea
-                    [(ngModel)]="text"
-                    >
+            <label for="">● Insert a note</label>
+            <textarea rows="5" cols="30" [(ngModel)]="text">
                 </textarea>
-                <label for="float-input">Anotações</label>
-            </p-floatLabel>
         </div>
 
-        <button (click)="logValue()">Enviar</button>
+        <button (click)="logValue()">
+            Send
+            <i class="pi pi-send"></i>
+        </button>
 
     </p-dialog>
 </div>

@@ -1,88 +1,65 @@
-<p>home works!</p>
+<main>
+    <section>
+        <div>
+            <h4 class="title">Welcome to</h4>
+            <img src='assets/images/goodreads.svg' alt="Goodreads logo">
+        </div>
 
-<a [routerLink]="['/my-favorits']" routerLinkActive="router-link-active" > favoritos</a>
-<br>
-<a [routerLink]="['/book-details', 1]" routerLinkActive="router-link-active"  > Book</a>
+        <label>
+            <input type="text" (keyup.enter)="searchBookOrAuthor(search.value)"
+                placeholder="Search book, name, author, ......" #search>
+            <button (click)="searchBookOrAuthor(search.value)">
+                <img src='assets/icons/search-input.svg' alt="Goodreads logo">
+            </button>
+        </label>
+
+        <p>Meet your favorite book, find you reading community, and manage you reading life.</p>
+    </section>
 
 
+    <article #booksSection>
 
-
-<input type="text" (keyup.enter)="searchBookOrAuthor(search.value)" placeholder="Qual Autor ou Livro você procura?"
-    #search>
-<button (click)="searchBookOrAuthor(search.value)">Procurar</button>
-
-
-@if (books; as data) {
-<ul>
-    @for(item of data; track item){
-    <li>
-        @if (item.volumeInfo.imageLinks) {
-        <img [src]="item.volumeInfo.imageLinks?.thumbnail" alt="{{ item.volumeInfo.title }}">
+        @if (!nameSearch) {
+        <h3 class="title">Trending this week</h3>
         }@else {
-        <h1>Sem poha nenhuma</h1>
+        <h3 class="title">Your Search: {{nameSearch}}</h3>
         }
-        <p> {{ item.volumeInfo.title }}</p>
-        <button (click)="clickBookDetails(item.id)">Ver: {{ item.id }} </button>
-    </li>
-    }@empty{
-    <h2>Loading...</h2>
-    }
-</ul>
-}@else {
-<li>erro de conexaõa</li>
-}
 
+        @if (books; as data) {
+        <ul>
+            @for(item of data; track item){
 
+            <li>
+                @if (item.volumeInfo.imageLinks) {
+                <img [src]="item.volumeInfo.imageLinks?.thumbnail" alt="{{ item.volumeInfo.title }}">
+                }@else {
+                <p-skeleton width="10rem" height="4rem" />
+                }
 
-<!-- //////////////////////////////////////////////-->
+                <h5> {{ item.volumeInfo.title }}</h5>
 
+                @if (item.volumeInfo.authors) {
+                <p> {{ item.volumeInfo.authors }}</p>
+                }@else {
+                <p>Sem Autor</p>
+                }
 
-<!-- @if (getListTask(); as data) {
-<ul>
-    @for(item of data; track item){
-    <li>{{item.id}} - {{item.title}} -
+                <p-rating [ngModel]="item.randomRating" [readonly]="true" [cancel]="false"> </p-rating>
 
-        <button (click)="httpTaskDelete(item.id)">Delete</button>
-    </li>
-    }@empty{
-    <li>sem dados carregados</li>
-    }
-</ul>
-}@else {
-<li>loading...</li>
-}
+                <button (click)="clickBookDetails(item.id)">
+                    <h6>Read more</h6>
+                     <i class="pi pi-window-maximize"></i>
+                </button>
+            </li>
 
-@if (getListTaskError()) {
-<p>{{getListTaskError()}}</p>
-}
+            }@empty{
+            <h2>Loading...</h2>
+            }
+        </ul>
+        }@else {
+        <li>erro de conexaõa</li>
+        }
 
-@if(getDeleteError()){
-<p>{{getDeleteError()}}</p>
-}
+    </article>
 
-
-<h3>item</h3>
-@if (getTaskId();as data) {
-{{data.id}}- {{data.title}}
-}@else {
-{{getTaskIdError()}}
-}
-
-
-<h3>create</h3>
-
-<input type="text" #createTittle placeholder="Add title">
-<button (click)="httpTaskCreate(createTittle.value)">Crriar</button>
-@if (getCreateError()) {
-<p>{{getCreateError()}}</p>
-}
-
-
-<h3>update</h3>
-<input type="text" #updateId placeholder="Add id">
-<input type="text" #updateTitle placeholder="Add title">
-<button (click)="httpTaskUpdate(updateId.value , updateTitle.value)">Update</button>
-
-@if (getUpdateError()) {
-<p>{{getUpdateError()}}</p>
-} -->
+</main>

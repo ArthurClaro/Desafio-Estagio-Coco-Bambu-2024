@@ -27,6 +27,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 })
 export class DialogConfirmComponent {
   visible: boolean = false;
+  pi: string | undefined;
 
   showDialog() {
     this.visible = true;
@@ -42,10 +43,10 @@ export class DialogConfirmComponent {
   constructor(private messageService: MessageService) { }
 
   show() {
-    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Message Content' });
+    this.messageService.add({ severity: 'success', summary: 'Sucesso', detail: 'Successfully evaluated' });
   }
   showErro() {
-    this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Insira os valores' });
+    this.messageService.add({ severity: 'error', summary: 'Erro', detail: 'Missing values' });
   }
 
   checked: boolean = false;
@@ -71,8 +72,14 @@ export class DialogConfirmComponent {
         // Emite os dados do formulário para o componente pai
         this.confirm.emit(array);
         this.visible = false; // Fecha o diálogo após o envio
+
+        document.body.style.overflow = 'auto'; // ou document.body.classList.remove('p-dialog-open');
+
       }, 1000)
     }
+  }
+  onDialogHide() {
+    document.body.style.overflow = 'auto'; // Reseta o estilo do body
   }
 
 }

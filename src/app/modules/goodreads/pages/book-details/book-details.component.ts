@@ -1,11 +1,17 @@
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink, RouterLinkActive } from '@angular/router';
 import { DialogConfirmComponent } from '../../components/dialog-confirm/dialog-confirm.component';
+import { SkeletonModule } from 'primeng/skeleton';
+import { RatingModule } from 'primeng/rating';
+import { FormsModule } from '@angular/forms';
+import { DatePipe, ViewportScroller } from '@angular/common';
+import { ChipsModule } from 'primeng/chips';
+
 
 @Component({
   selector: 'app-book-details',
   standalone: true,
-  imports: [RouterLink, RouterLinkActive, DialogConfirmComponent],
+  imports: [RouterLink,ChipsModule, RouterLinkActive, DialogConfirmComponent,SkeletonModule,RatingModule,FormsModule,DatePipe],
   templateUrl: './book-details.component.html',
   styleUrl: './book-details.component.scss'
 })
@@ -37,8 +43,11 @@ export default class BookDetailsComponent implements OnInit {
     this.bookDetail = navigation?.extras.state?.['bookDetail'];
   }
 
+  #viewportScroller = inject(ViewportScroller);
 
   ngOnInit(): void {
+    this.#viewportScroller.scrollToPosition([0, 0]);
+
     const bookId = this.#route.snapshot.params['id']; // Obtém o ID da rota
     const existingBook = this.findBookInLocalStorage(bookId);
 
