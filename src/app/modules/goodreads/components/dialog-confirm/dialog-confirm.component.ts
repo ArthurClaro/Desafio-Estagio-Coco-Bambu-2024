@@ -28,17 +28,14 @@ import { CheckboxModule } from 'primeng/checkbox';
 export class DialogConfirmComponent {
   visible: boolean = false;
   pi: string | undefined;
+  value!: number;
+  values = new FormControl<string[] | null>(null);
+  max = 3;
+  text?: string;
 
   showDialog() {
     this.visible = true;
   }
-
-  value!: number;
-
-  values = new FormControl<string[] | null>(null);
-  max = 3;
-
-  text?: string;
 
   constructor(private messageService: MessageService) { }
 
@@ -50,43 +47,33 @@ export class DialogConfirmComponent {
   }
 
   checked: boolean = false;
-  @Output() confirm = new EventEmitter<any>(); // Emissor de evento para enviar os dados ao componente pai
+  @Output() confirm = new EventEmitter<any>();
 
 
   logValue() {
     if (this.value == null || !this.checked || this.values.value == null || this.text == null) {
-      console.log('Erro detectado:', this.value, this.checked, this.values.value, this.text);
       this.showErro();
 
     } else {
       this.show();
       setTimeout(() => {
         const array = {
-          favorite: this.checked, // Será true somente se o checkbox estiver marcado
+          favorite: this.checked,
           range: this.value,
           tags: this.values.value,
           notes: this.text
         };
 
-        console.log(array);
-        // Emite os dados do formulário para o componente pai
         this.confirm.emit(array);
-        this.visible = false; // Fecha o diálogo após o envio
+        this.visible = false;
 
-        document.body.style.overflow = 'auto'; // ou document.body.classList.remove('p-dialog-open');
+        document.body.style.overflow = 'auto';
 
       }, 1000)
     }
   }
   onDialogHide() {
-    document.body.style.overflow = 'auto'; // Reseta o estilo do body
+    document.body.style.overflow = 'auto';
   }
 
 }
-
-
-// https://primeng.org/chips
-// https://primeng.org/rating
-// https://primeng.org/dialog
-// https://primeng.org/inputtextarea
-// https://primeng.org/toast

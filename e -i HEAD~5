@@ -1,0 +1,47 @@
+[33mcommit 44b040915413a6994ac3ee3e4ae59eeaa3ed4a30[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 03:02:51 2024 -0300
+
+    Update README.md
+
+[33mcommit ab3a18fbf49f5c068183e7708bb1c73c2037a2f2[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 03:02:08 2024 -0300
+
+    Update README.md
+
+[33mcommit e186453fa1c3586e585a2ddfd8529d05922b91b9[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 02:27:31 2024 -0300
+
+    Update README.md
+
+[33mcommit 9de6c7a25b42138a5c20a79628617c10d1f7e864[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 02:23:48 2024 -0300
+
+    Update README.md
+
+[33mcommit 773cf629405b219074aba4f90d01af2fb0adc406[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 02:15:41 2024 -0300
+
+    style: :zap: comments exclude
+
+[33mcommit 615f57f140b029b0613c72f3a1af3c21e87848fe[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Thu Sep 19 02:13:23 2024 -0300
+
+    refactor: :rocket: Refact code / Add interface
+
+[33mcommit c891ad691dbe3b1ddf384d11cd606032d74bca6c[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Wed Sep 18 22:29:46 2024 -0300
+
+    style: :lipstick: Add Desktop Style
+
+[33mcommit 97ad386f5ad471dc454153770e1ebb569b9de75e[m
+Author: ArthurClaro <0123456789arthur@gmail.com>
+Date:   Tue Sep 17 08:48:17 2024 -0300
+
+    feat: :art: Add Back-End-Logic
